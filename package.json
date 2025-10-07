@@ -1,0 +1,165 @@
+{
+  "name": "pbhj-advanced-formatter",
+  "displayName": "PBHJ Advanced Formatter",
+  "description": "Advanced multi-language formatter for HTML, JavaScript, PHP, and Blade",
+  "version": "1.0.9",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Formatters"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "publisher": "Yamin",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://example.com/pbhj/pbhj-advanced-formatter.git"
+  },
+  "bugs": {
+    "url": "https://example.com/pbhj/pbhj-advanced-formatter/issues"
+  },
+  "homepage": "https://example.com/pbhj/pbhj-advanced-formatter#readme",
+  "keywords": [
+    "formatter",
+    "prettier",
+    "php",
+    "blade",
+    "html",
+    "javascript"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "html",
+        "extensions": [
+          ".html",
+          ".htm"
+        ]
+      },
+      {
+        "id": "javascript",
+        "extensions": [
+          ".js",
+          ".mjs",
+          ".cjs"
+        ]
+      },
+      {
+        "id": "php",
+        "extensions": [
+          ".php"
+        ]
+      },
+      {
+        "id": "blade",
+        "aliases": [
+          "Blade"
+        ],
+        "extensions": [
+          ".blade.php"
+        ]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "blade",
+        "scopeName": "text.html.php.blade",
+        "path": "./syntaxes/blade.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "PBHJ Advanced Formatter",
+      "properties": {
+        "pbhjFormatter.debug.enable": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable PBHJ debug visuals (status bar, background tint, closing tag highlights)."
+        },
+        "pbhjFormatter.printWidth": {
+          "type": "number",
+          "default": 100,
+          "description": "Maximum line width for Prettier-based formatters."
+        },
+        "pbhjFormatter.tabWidth": {
+          "type": "number",
+          "default": 2,
+          "description": "Number of spaces per indentation level for Prettier-based formatters."
+        },
+        "pbhjFormatter.useTabs": {
+          "type": "boolean",
+          "default": false,
+          "description": "Use tabs instead of spaces for indentation when formatting."
+        },
+        "pbhjFormatter.semi": {
+          "type": "boolean",
+          "default": true,
+          "description": "Print semicolons in JavaScript."
+        },
+        "pbhjFormatter.singleQuote": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use single quotes instead of double quotes in JavaScript."
+        },
+        "pbhjFormatter.blade.wrapAttributes": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "force",
+            "force-aligned",
+            "force-expand-multiline"
+          ],
+          "default": "auto",
+          "description": "Attribute wrapping style for Blade formatter."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "pbhj-advanced-formatter.formatDocument",
+        "title": "PBHJ: Format Document"
+      },
+      {
+        "command": "pbhj-advanced-formatter.toggleDebug",
+        "title": "PBHJ: Toggle Debug Visuals"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "pbhj-advanced-formatter.formatDocument",
+        "key": "shift+alt+p",
+        "mac": "shift+alt+p",
+        "when": "editorTextFocus && !editorReadonly"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run bundle",
+    "bundle": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --external:prettier --external:@prettier/plugin-php --external:blade-formatter --platform=node --format=cjs --sourcemap",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.70.0",
+    "@typescript-eslint/eslint-plugin": "^8.45.0",
+    "@typescript-eslint/parser": "^8.45.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.24.2",
+    "eslint": "^9.36.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@prettier/plugin-php": "^0.24.0",
+    "blade-formatter": "^1.44.2",
+    "prettier": "^3.6.2"
+  }
+}
