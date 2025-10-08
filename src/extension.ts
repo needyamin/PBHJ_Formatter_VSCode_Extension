@@ -15,8 +15,22 @@ async function loadPhpPlugin(): Promise<any> {
 
 async function bladeFormatDynamic(input: string, options: any): Promise<string> {
   const mod: any = await import('blade-formatter');
-  const fn = mod?.format ?? mod?.default ?? mod;
-  return await fn(input, options);
+  const Formatter = mod?.Formatter ?? mod?.default?.Formatter;
+  if (Formatter) {
+    const instance = new Formatter(options ?? {});
+    return await instance.formatContent(input);
+  }
+  // Fallback: legacy function-shaped exports
+  const candidate =
+    typeof mod?.format === 'function' ? mod.format
+      : typeof mod?.default?.format === 'function' ? mod.default.format
+      : typeof mod?.default === 'function' ? mod.default
+      : typeof mod === 'function' ? mod
+      : undefined;
+  if (typeof candidate !== 'function') {
+    throw new Error('Blade formatter "format" function not found in module export');
+  }
+  return await candidate(input, options);
 }
 
 type SupportedLanguageId = 'html' | 'javascript' | 'php' | 'blade';
@@ -70,9 +84,13 @@ async function formatBlade(document: vscode.TextDocument): Promise<string> {
   const cfg = vscode.workspace.getConfiguration('pbhjFormatter');
   const wrapAttributes = cfg.get<string>('blade.wrapAttributes', 'auto');
   const content = document.getText();
+  const eol = document.eol === vscode.EndOfLine.CRLF ? 'CRLF' : 'LF';
   const result = await bladeFormatDynamic(content, {
     indentSize: cfg.get<number>('tabWidth', 2),
+    useTabs: cfg.get<boolean>('useTabs', false),
     wrapAttributes: wrapAttributes as any,
+    wrapLineLength: cfg.get<number>('printWidth', 100),
+    endOfLine: eol,
   });
   return result;
 }

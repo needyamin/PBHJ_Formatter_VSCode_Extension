@@ -2,7 +2,8 @@
   "name": "pbhj-advanced-formatter",
   "displayName": "PBHJ Advanced Formatter",
   "description": "Advanced multi-language formatter for HTML, JavaScript, PHP, and Blade",
-  "version": "1.0.9",
+  "version": "1.0.14",
+  "icon": "pbhj.jpg",
   "engines": {
     "vscode": "^1.70.0"
   },
@@ -17,12 +18,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://example.com/pbhj/pbhj-advanced-formatter.git"
+    "url": "https://github.com/needyamin/Formatter_PBHJ_VSCODE_PLUGIN"
   },
   "bugs": {
-    "url": "https://example.com/pbhj/pbhj-advanced-formatter/issues"
+    "url": "https://github.com/needyamin/Formatter_PBHJ_VSCODE_PLUGIN/issues"
   },
-  "homepage": "https://example.com/pbhj/pbhj-advanced-formatter#readme",
+  "homepage": "https://github.com/needyamin/Formatter_PBHJ_VSCODE_PLUGIN#readme",
   "keywords": [
     "formatter",
     "prettier",
