@@ -223,40 +223,8 @@ export function activate(context: vscode.ExtensionContext) {
   });
   context.subscriptions.push(commandDisposable);
 
-  const htmlProvider = vscode.languages.registerDocumentFormattingEditProvider({ language: 'html' }, {
-    provideDocumentFormattingEdits: async (document) => {
-      try { return replaceWholeDocument(document, await formatWithPrettier(document, 'html')); } catch (e: any) {
-        vscode.window.showErrorMessage(`PBHJ HTML format error: ${e?.message ?? String(e)}`);
-        return [];
-      }
-    },
-  });
-  const jsProvider = vscode.languages.registerDocumentFormattingEditProvider({ language: 'javascript' }, {
-    provideDocumentFormattingEdits: async (document) => {
-      try { return replaceWholeDocument(document, await formatWithPrettier(document, 'javascript')); } catch (e: any) {
-        vscode.window.showErrorMessage(`PBHJ JS format error: ${e?.message ?? String(e)}`);
-        return [];
-      }
-    },
-  });
-  const phpProvider = vscode.languages.registerDocumentFormattingEditProvider({ language: 'php' }, {
-    provideDocumentFormattingEdits: async (document) => {
-      try { return replaceWholeDocument(document, await formatPhp(document)); } catch (e: any) {
-        vscode.window.showErrorMessage(`PBHJ PHP format error: ${e?.message ?? String(e)}`);
-        return [];
-      }
-    },
-  });
-  const bladeProvider = vscode.languages.registerDocumentFormattingEditProvider({ language: 'blade' }, {
-    provideDocumentFormattingEdits: async (document) => {
-      try { return replaceWholeDocument(document, await formatBlade(document)); } catch (e: any) {
-        vscode.window.showErrorMessage(`PBHJ Blade format error: ${e?.message ?? String(e)}`);
-        return [];
-      }
-    },
-  });
-
-  context.subscriptions.push(htmlProvider, jsProvider, phpProvider, bladeProvider);
+  // Note: We intentionally do NOT register DocumentFormattingEditProviders.
+  // This ensures the extension never formats automatically (e.g., on save).
 }
 
 export function deactivate() {}

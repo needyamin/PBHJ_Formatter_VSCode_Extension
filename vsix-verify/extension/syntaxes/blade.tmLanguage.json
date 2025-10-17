@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vscode/master/extensions/html/syntaxes/html.tmLanguage.json",
+  "name": "Blade",
+  "patterns": [
+    { "include": "text.html.basic" },
+    { "name": "blade.directive",
+      "match": "@(?:if|endif|elseif|else|foreach|endforeach|for|endfor|while|endwhile|php|endphp|extends|section|endsection|yield|include|component|slot|csrf|method|error|auth|guest|isset|endisset|empty|endempty|unless|endunless)" },
+    { "name": "blade.echo.short", "begin": "\\{\\{", "end": "\\}\\}", "patterns": [{ "include": "source.php" }] },
+    { "name": "blade.echo.escaped", "begin": "\\{\\{\\{", "end": "\\}\\}\\}", "patterns": [{ "include": "source.php" }] },
+    { "name": "blade.php", "begin": "@php", "end": "@endphp", "patterns": [{ "include": "source.php" }] }
+  ],
+  "scopeName": "text.html.php.blade"
+}
+
